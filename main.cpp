@@ -1,32 +1,28 @@
 #include "chip8.h"
 #include "display.h"
+#include <chrono>
 #include <cstdint>
 #include <iostream>
+#include <stdexcept>
+#include <thread>
 
 uint8_t exit_program();
 
 int main(int argc, char *argv[]) {
-  Chip8 cpu;
-  cpu.initialize();
-  cpu.load_rom(argv[1]);
+  try {
+    Chip8 cpu;
+    cpu.initialize();
+    cpu.load_rom(argv[1]);
+    Display display;
 
-  Display display;
-
-  while (true) {
-    cpu.execute_cycle();
-
-    for (int i = 0; i < 32; i++) {
-      for (int j = 0; j < 64; j++) {
-        if (cpu.gfx[(i * 64) + j]) {
-          std::cout << "▮▮";
-        } else {
-
-          std::cout << "  ";
-        }
-      }
-      std::cout << std::endl;
+    while (true) {
+      cpu.execute_cycle();
+      display.update_screen(cpu);
+      std::this_thread::sleep_for(std::chrono::milliseconds(17));
     }
-    display.update_screen(cpu);
+
+  } catch (std::runtime_error e) {
+    std::cout << e.what() << std::endl;
   }
 }
 

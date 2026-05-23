@@ -12,6 +12,7 @@ public:
   uint8_t load_rom(char *filename);
   void execute_cycle();
   std::array<uint8_t, 64 * 32> gfx;
+  uint8_t update_screen_flag;
 
 private:
   std::array<uint8_t, 4096> memory;

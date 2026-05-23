@@ -1,4 +1,3 @@
-#pragma once
 #include "display.h"
 #include "chip8.h"
 #include <SDL2/SDL_render.h>
@@ -10,6 +9,7 @@
 Display::Display() {
 
   pixel_data.fill(0);
+
   if (SDL_Init(SDL_INIT_EVERYTHING) < 0) {
     std::cout << "Error: " << SDL_GetError() << std::endl;
     throw std::runtime_error("SDL initialization failed");
@@ -27,19 +27,18 @@ Display::Display() {
     std::cout << "Error: " << SDL_GetError() << std::endl;
     throw std::runtime_error("Could not create renderer");
   }
-  texture = SDL_CreateTexture(renderer, SDL_PIXELFORMAT_RGBA8888,
+  texture = SDL_CreateTexture(renderer, SDL_PIXELFORMAT_RGBA32,
                               SDL_TEXTUREACCESS_STREAMING, 64, 32);
 }
 Display::~Display() {}
 
-uint8_t Display::update_screen(Chip8 &chip8) {
-  for (uint16_t i = 0, size = chip8.gfx.size(); i++;) {
+void Display::update_screen(Chip8 &chip8) {
+  for (uint16_t i = 0, size = chip8.gfx.size(); i < size; i++) {
     chip8.gfx[i] ? pixel_data[i] = 0xFFFFFFFF : 0x000000FF;
   }
-  surface =
-      SDL_CreateRGBSurfaceFrom(pixel_data.data(), 64, 32, 8, 64, 0, 0, 0, 0);
-  texture = SDL_CreateTextureFromSurface(renderer, surface);
   SDL_RenderClear(renderer);
+  SDL_UpdateTexture(texture, NULL, pixel_data.data(), 64 * sizeof(uint32_t));
+  SDL_RenderCopy(renderer, texture, NULL, NULL);
   SDL_RenderPresent(renderer);
-  return 0;
+  chip8.update_screen_flag = 0;
 }

@@ -12,12 +12,11 @@ class Display {
 public:
   Display();
   ~Display();
-  uint8_t update_screen(Chip8 &chip8);
+  void update_screen(Chip8 &chip8);
 
 private:
   SDL_Window *window;
   SDL_Renderer *renderer;
-  SDL_Surface *surface;
   SDL_Texture *texture;
   inline static uint16_t SCREEN_WIDTH = 640;
   inline static int16_t SCREEN_HEIGHT = 320;

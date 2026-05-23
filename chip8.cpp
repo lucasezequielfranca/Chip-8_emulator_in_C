@@ -17,6 +17,7 @@ Chip8::Chip8() {
   delay_timer = 0;
   sound_timer = 0;
   gfx.fill(0);
+  update_screen_flag = 0;
 }
 Chip8::~Chip8() {}
 
@@ -106,6 +107,7 @@ void Chip8::execute_cycle() {
         gfx[display_index] ^= bit;
         continue;
       }
+      update_screen_flag = 1;
     }
     break;
   }
