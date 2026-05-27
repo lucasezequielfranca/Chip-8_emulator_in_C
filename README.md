@@ -15,10 +15,10 @@ The interpreter runs with default CHIP-8 resolutin but have the super-chip quirk
 
 | Original Chip-8 Keypad | | Mine Interpreter Keypad |
 | :---: | :---: | :---: |
-| `1` `2` `3` `C` | | `1` `2` `3` `4` |
+| `1` `2` `3` `C` |           | `1` `2` `3` `4` |
 | `4` `5` `6` `D` | **---->** | `q` `w` `e` `r` |
-| `7` `8` `9` `E` | | `a` `s` `d` `f` |
-| `A` `0` `B` `F` | | `z` `x` `c` `v` |
+| `7` `8` `9` `E` |           | `a` `s` `d` `f` |
+| `A` `0` `B` `F` |           | `z` `x` `c` `v` |
 ```
 
 ---
