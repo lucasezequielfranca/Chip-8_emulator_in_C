@@ -33,7 +33,7 @@ original chip-8 keypad        mine interpreter keypad
   </tr>
   <tr>
     <td><img src="https://github.com/user-attachments/assets/cc5cb125-99c8-44c2-889f-48cd4e03a5f4" alt="Chip-8 Interpreter Running" width="100%"></td>
-    <td><img src="LINK_DA_FOTO_4.png" alt="Jogo 4" width="100%"></td>
+    <td><img width="650" height="352" alt="Pong running" src="https://github.com/user-attachments/assets/575cdc9e-9996-4544-b365-a1eecadbff42" /></td>
   </tr>
 </table>
 
