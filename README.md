@@ -51,7 +51,7 @@ clang++ src/*.cpp -o chip8 -std=c++17 -lSDL2
 
 ---
 
-* **Running:**
+**Running:**
 ```bash
 ./chip8 <path-to-rom> [--debug]
 ```
