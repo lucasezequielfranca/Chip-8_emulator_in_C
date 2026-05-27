@@ -9,7 +9,14 @@ The interpreter runs with default CHIP-8 resolutin but have the super-chip quirk
 * **Instruction Cycle (Fetch-Decode-Execute):** Basic cycle implemented, running instructions straight from memory.
 * **Clock Sync:** The Cycle runs freely inside a batch of instructions per frame (~700 Hz), while the Timers and the screen renderer run locked at 60 Hz using `std::chrono`.
 * **Log debugger:** Fully functinal log debbugger, with a option to toggle step by step (input wont work in this mode).
-* **Settings**: Configurable colors and keyboard key inside display.cpp and instructions pre frame inside chip8.cpp. 
+* **Settings**: Configurable colors and keyboard key inside display.cpp and instructions pre frame inside chip8.cpp.
+* **Keypad**: Default keypad works wuing the following map:
+  original chip-8 keypad           mine interpreter keypad
+         1 2 3 C                        1 2 3 4
+         4 5 6 D           ----->       q w e r
+         7 8 9 E                        a s d f
+         A 0 B F                        z x c v
+  
 
 ---
 
