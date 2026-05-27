@@ -16,7 +16,8 @@ public:
   inline static constexpr uint8_t GFX_WIDTH = 64;
   inline static constexpr uint8_t GFX_HEIGHT = 32;
   std::array<uint8_t, GFX_WIDTH * GFX_HEIGHT> gfx; // display array
-  uint8_t update_screen_flag;                      // flag to update screen
+  uint8_t sound_timer;
+  uint8_t update_screen_flag; // flag to update screen
   uint16_t instructions_per_second;
   uint8_t running_flag;
   uint8_t basic_emulator_flag;
@@ -35,7 +36,6 @@ private:
   uint8_t stack_pointer;
   std::array<uint8_t, 16> v_register;
   uint8_t delay_timer;
-  uint8_t sound_timer;
 
   // opcode pointers for deconding
   uint16_t opcode;

@@ -1,6 +1,7 @@
 #include "display.h"
 #include "chip8.h"
 #include <SDL2/SDL.h>
+#include <SDL2/SDL_audio.h>
 #include <SDL2/SDL_events.h>
 #include <SDL2/SDL_keycode.h>
 #include <SDL2/SDL_render.h>
@@ -51,12 +52,29 @@ Display::Display(Chip8 &chip8) {
   texture = SDL_CreateTexture(renderer, SDL_PIXELFORMAT_RGBA8888,
                               SDL_TEXTUREACCESS_STREAMING, chip8.GFX_WIDTH,
                               chip8.GFX_HEIGHT);
+  if (SDL_LoadWAV("beep.wav", &wav_spec, &wav_buffer, &wav_length) == NULL) {
+  }
+
+  // 2. Abre o dispositivo baseado no próprio arquivo WAV
+  audio_device = SDL_OpenAudioDevice(NULL, 0, &wav_spec, NULL, 0);
+  if (audio_device == 0) {
+    SDL_FreeWAV(wav_buffer);
+  }
+
+  // 3. Liga o dispositivo (deixa em prontidão)
+  SDL_PauseAudioDevice(audio_device, 0);
 }
 Display::~Display() {
   SDL_DestroyRenderer(renderer);
   SDL_DestroyTexture(texture);
   SDL_DestroyWindow(window);
   SDL_Quit();
+  if (audio_device != 0) {
+    SDL_CloseAudioDevice(audio_device);
+  }
+  if (wav_buffer != nullptr) {
+    SDL_FreeWAV(wav_buffer);
+  }
 }
 
 void Display::update_screen(Chip8 &chip8) {
@@ -116,11 +134,19 @@ void Display::handle_events(Chip8 &chip8) {
   }
 }
 
-void Chip8::decrease_timers() {
-  if (delay_timer > 0) {
-    delay_timer--;
-  }
+// Método para chamar no seu loop principal da Main
+void Display::update_audio(uint8_t sound_timer) {
+  if (audio_device == 0)
+    return; // Se o áudio falhou ao abrir, não faz nada
+
   if (sound_timer > 0) {
-    sound_timer--;
+    // Se o cronômetro estiver ativo e a fila de som esvaziou, joga o bip de
+    // novo
+    if (SDL_GetQueuedAudioSize(audio_device) == 0) {
+      SDL_QueueAudio(audio_device, wav_buffer, wav_length);
+    }
+  } else {
+    // Se o timer zerou, limpa a fila para cortar o som imediatamente
+    SDL_ClearQueuedAudio(audio_device);
   }
 }

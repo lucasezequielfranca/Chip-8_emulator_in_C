@@ -368,3 +368,11 @@ void Chip8::execute_cycle() {
     }
   }
 }
+void Chip8::decrease_timers() {
+  if (delay_timer > 0) {
+    delay_timer--;
+  }
+  if (sound_timer > 0) {
+    sound_timer--;
+  }
+}

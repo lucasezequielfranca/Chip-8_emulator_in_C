@@ -45,13 +45,10 @@ int main(int argc, char *argv[]) {
         chip8.execute_cycle();
         display.update_screen(chip8);
         // checks if the screen have any changes if so updates it
-        if (chip8.debug_mode) {
-          std::cout << "Press Enter to go one step in: " << std::endl;
-          std::cin.get();
-        }
       }
 
       chip8.decrease_timers();
+      display.update_audio(chip8.sound_timer);
 
       std::this_thread::sleep_until(start_time);
     }
