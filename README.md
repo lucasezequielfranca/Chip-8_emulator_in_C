@@ -1,4 +1,4 @@
-# chip8 Interpreter
+# CHIP-8 Interpreter
 
 A simple CHIP-8 interpreter written in C++ and SDL2 for graphics. Made to study emulation, low-level concepts, and how a CPU cycle works. The interpreter was tested with Timendius chip8 test suit, wich is included in roms folder.
 
